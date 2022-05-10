@@ -1,0 +1,141 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+
+<c:set var="cookieLocale" value="${not empty param.locale ? param.locale : cookie.locale.value}"/>
+<c:set var="lang" value="${not empty cookieLocale ? cookieLocale: 'en'}"/>
+
+<fmt:setLocale value="${not empty cookieLocale ? cookieLocale: 'en'}"/>
+<fmt:setBundle basename="messages"/>
+
+<c:set var="user" value="${(sessionScope.user)}"/>
+<!DOCTYPE html>
+
+<html lang="${lang}">
+<div>
+    <header class="p-3 bg-dark myNav">
+        <div class="d-flex align-items-center justify-content-center">
+            <ul class="nav d-flex align-items-end col-lg-auto me-lg-auto mb-0">
+                <li><a href="${pageContext.request.contextPath}/" class="nav-link px-2 text-secondary"><fmt:message key="home.page"/></a></li>
+
+
+                  <c:if test="${not empty user}">
+                     <li>
+                    <a href="/orders/my-history" class="nav-link px-2 text-white">
+                        <fmt:message key="header.order.history"/></a></li>
+                   </c:if>
+                <li><a href="/menu" class="nav-link px-2 text-white"><fmt:message key="header.menu"/></a></li>
+                <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                    <li><a  href="/admin/orders" class="nav-link px-2 text-warning">
+                        <fmt:message key="header.manage.orders"/></a></li>
+                    <li><a href="/admin/dishes" class="nav-link px-2 text-warning">
+                        <fmt:message key="header.manage.menu"/></a></li>
+                </c:if>
+            </ul>
+            <a href="?locale=en" class="nav-link">
+                <img src="<c:url value="/images/enLang.jpg"/>" width="30">
+            </a>
+            <a href="?locale=ua" class="nav-link">
+                <img src="<c:url value="/images/uaLang.jpg"/>" width="30">
+            </a>
+<c:if test="${not empty requestScope.balance}">
+<div class="fw-bold me-3">
+                <span class="text-white"><fmt:message key="balance.name"/></span>
+                <span class="text-warning">${requestScope.balance}</span>
+                <span class="text-warning">₴</span>
+            </div>
+</c:if>
+
+       <c:if test="${empty user}">
+
+           <c:url value="/login" var="loginUrl"/>
+            <div class="d-flex justify-content-around" >
+                <button onclick="window.location.href='${loginUrl}'"
+                        type="button"
+                        class="btn btn-outline-light me-2"><fmt:message key="header.login"/>
+                </button>
+
+                <c:url value="/signup" var="signupUrl"/>
+                <button onclick="window.location.href='${signupUrl}'"
+
+                        type="button"
+                        class="btn btn-warning"><fmt:message key="authorization.signup"/>
+                </button>
+            </div>
+        </c:if>
+
+<c:if test="${not empty requestScope.balance}">
+                <button
+
+                        type="button"
+                        class="btn btn-outline-light me-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#balanceTopUp"><fmt:message key="balance.topup"/>
+                </button>
+                <!-- Modal -->
+                <div
+                        class="modal fade"
+                        id="balanceTopUp"
+                        tabindex="-1"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                >
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5
+                                    class="modal-title" id="exampleModalLabel">
+                                    <fmt:message key="modal.balance.topup"/>
+                                </h5>
+                                <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                ></button>
+                            </div>
+                            <div class="modal-body">
+                                <form
+                                        action="${pageContext.request.contextPath}/top-up"
+                                        method="post"
+                                >
+                                    <div class="mb-3">
+                                        <label
+                                               for="balance" class="form-label"
+                                        ><fmt:message key="modal.balance.topup.label"/></label>
+                                        <input
+                                                name="balance"
+                                                type="number"
+                                                class="form-control"
+                                                id="balance"
+                                                min="0"
+                                                required
+                                        />
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button
+                                                type="submit" class="btn btn-primary"><fmt:message key="modal.balance.topup.submit"/>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</c:if>
+
+         <c:if test="${not empty user}">
+
+            <button onclick="window.location.href='/logout'"
+                    type="button"
+                    class="btn btn-outline-light me-2"
+                    ><fmt:message key="header.logout"/>
+            </button>
+         </c:if>
+
+
+        </div>
+    </header>
+</div>
+
+
