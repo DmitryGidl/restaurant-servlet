@@ -173,9 +173,9 @@
                 <a href="${priceSortUrl}"
                    class=" text-reset"><fmt:message key="order.total.price"/></a>
             </th>
-            <th>Address</th>
-            <th>Client Name</th>
-            <th>Actions</th>
+            <th><fmt:message key="order.address"/></th>
+            <th><fmt:message key="order.client.name"/></th>
+            <th><fmt:message key="table.actions"/></th>
         </tr>
         </thead>
         <tbody>
