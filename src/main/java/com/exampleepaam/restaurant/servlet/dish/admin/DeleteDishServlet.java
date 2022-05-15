@@ -2,7 +2,7 @@ package com.exampleepaam.restaurant.servlet.dish.admin;
 
 import com.exampleepaam.restaurant.constant.PathConstants;
 import com.exampleepaam.restaurant.service.DishService;
-import com.exampleepaam.restaurant.service.ServiceManager;
+import com.exampleepaam.restaurant.service.ServiceFactory;
 import com.exampleepaam.restaurant.web.listener.ContextListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +30,7 @@ public class DeleteDishServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        dishService = ServiceManager.getInstance().getDishService();
+        dishService = ServiceFactory.getInstance().getDishService();
         ServletContext sc = getServletContext();
         uploadDir = (String) sc.getAttribute(ContextListener.UPLOAD_DIR_ATTRIBUTE);
     }

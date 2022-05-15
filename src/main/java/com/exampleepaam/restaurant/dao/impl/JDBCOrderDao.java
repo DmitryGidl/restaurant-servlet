@@ -38,7 +38,7 @@ public class JDBCOrderDao implements OrderDao {
         this.orderItemDaoMapper = orderItemDaoMapper;
     }
 
-    public static final String DEFAULT_SORT_FIELD = "id";
+    public static final String DEFAULT_SORT_FIELD = "orders.id";
     public static final String DEFAULT_SORT_DIR = "DESC";
 
     /**
@@ -179,7 +179,8 @@ public class JDBCOrderDao implements OrderDao {
         int start = currentPage * pageSize - pageSize;
         long totalRows = 0;
         String queryBuilder = String.format(
-                "SELECT *, COUNT(id) OVER() AS total FROM orders ORDER BY %s %s, %s %s LIMIT ? OFFSET ?",
+                "SELECT *, COUNT(orders.id) OVER() AS total FROM orders LEFT JOIN users ON orders.user_id=users.id " +
+                        "ORDER BY %s %s, %s %s LIMIT ? OFFSET ?",
                 sortField, sortDir, DEFAULT_SORT_FIELD, DEFAULT_SORT_DIR);
         try (PreparedStatement ps = connection.prepareStatement(queryBuilder)) {
             int k = 0;
@@ -189,6 +190,8 @@ public class JDBCOrderDao implements OrderDao {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Order order = orderDaoMapper.extractFromResultSet(rs);
+                    User user = userDaoMapper.extractFromResultSet(rs);
+                    order.setUser(user);
                     totalRows = rs.getLong("total");
                     List<OrderItem> orderItems = fetchOrderItems(order.getId());
                     order.setOrderItems(orderItems);
@@ -217,7 +220,8 @@ public class JDBCOrderDao implements OrderDao {
         int start = currentPage * pageSize - pageSize;
         long totalRows = 0;
         String queryBuilder = String.format(
-                "SELECT *, COUNT(id) OVER() AS total FROM orders WHERE status=? ORDER BY %s %s, %s %s LIMIT ? OFFSET ?",
+                "SELECT *, COUNT(orders.id) OVER() AS total FROM orders LEFT JOIN users ON orders.user_id=users.id " +
+                        "WHERE status=? ORDER BY %s %s, %s %s LIMIT ? OFFSET ?",
                 sortField, sortDir, DEFAULT_SORT_FIELD, DEFAULT_SORT_DIR);
         try (PreparedStatement ps = connection.prepareStatement(queryBuilder)) {
             int k = 0;
@@ -229,6 +233,8 @@ public class JDBCOrderDao implements OrderDao {
                 while (rs.next()) {
                     totalRows = rs.getLong("total");
                     Order order = orderDaoMapper.extractFromResultSet(rs);
+                    User user = userDaoMapper.extractFromResultSet(rs);
+                    order.setUser(user);
                     List<OrderItem> orderItems = fetchOrderItems(order.getId());
                     order.setOrderItems(orderItems);
                     orders.add(order);
@@ -258,7 +264,8 @@ public class JDBCOrderDao implements OrderDao {
         int start = currentPage * pageSize - pageSize;
         long totalRows = 0;
         String queryBuilder = String.format(
-                "SELECT *, COUNT(id) OVER() AS total FROM orders WHERE status = ANY (?) ORDER BY %s %s, %s %s LIMIT ? OFFSET ?",
+                "SELECT *, COUNT(orders.id) OVER() AS total FROM orders LEFT JOIN users ON orders.user_id=users.id " +
+                        "WHERE status = ANY (?) ORDER BY %s %s, %s %s LIMIT ? OFFSET ?",
                 sortField, sortDir, DEFAULT_SORT_FIELD, DEFAULT_SORT_DIR);
         try (PreparedStatement ps = connection.prepareStatement(queryBuilder)) {
             Array activeArray = connection.createArrayOf("text", filterStatusList.toArray());
@@ -272,6 +279,8 @@ public class JDBCOrderDao implements OrderDao {
                 while (rs.next()) {
                     totalRows = rs.getLong("total");
                     Order order = orderDaoMapper.extractFromResultSet(rs);
+                    User user = userDaoMapper.extractFromResultSet(rs);
+                    order.setUser(user);
                     List<OrderItem> orderItems = fetchOrderItems(order.getId());
                     order.setOrderItems(orderItems);
                     orders.add(order);
@@ -394,7 +403,8 @@ public class JDBCOrderDao implements OrderDao {
         int start = currentPage * pageSize - pageSize;
         long totalRows = 0;
         String queryBuilder = String.format(
-                "SELECT *, COUNT(id) OVER() as total FROM orders WHERE user_id=? ORDER BY %s %s, %s %s LIMIT ? OFFSET ?",
+                "SELECT *, COUNT(orders.id) OVER() as total FROM orders" +
+                        " WHERE user_id=? ORDER BY %s %s, %s %s LIMIT ? OFFSET ?",
                 sortField, sortDir, DEFAULT_SORT_FIELD, DEFAULT_SORT_DIR);
         try (PreparedStatement ps = connection.prepareStatement(queryBuilder)) {
             int k = 0;
@@ -406,6 +416,7 @@ public class JDBCOrderDao implements OrderDao {
                 while (rs.next()) {
                     totalRows = rs.getLong("total");
                     Order order = orderDaoMapper.extractFromResultSet(rs);
+                    order.setUser(user);
                     List<OrderItem> orderItems = fetchOrderItems(order.getId());
                     order.setOrderItems(orderItems);
                     orders.add(order);
@@ -436,7 +447,8 @@ public class JDBCOrderDao implements OrderDao {
         int start = currentPage * pageSize - pageSize;
         long totalRows = 0;
         String queryBuilder = String.format(
-                "SELECT *, COUNT(id) OVER() AS total FROM orders WHERE status=? AND user_id=? " +
+                "SELECT *, COUNT(orders.id) OVER() AS total FROM orders " +
+                        "WHERE status=? AND user_id=? " +
                         "ORDER BY %s %s, %s %s LIMIT ? OFFSET ?",
                 sortField, sortDir, DEFAULT_SORT_FIELD, DEFAULT_SORT_DIR);
         try (PreparedStatement ps = connection.prepareStatement(queryBuilder)) {
@@ -450,6 +462,7 @@ public class JDBCOrderDao implements OrderDao {
                 while (rs.next()) {
                     totalRows = rs.getLong("total");
                     Order order = orderDaoMapper.extractFromResultSet(rs);
+                    order.setUser(user);
                     List<OrderItem> orderItems = fetchOrderItems(order.getId());
                     order.setOrderItems(orderItems);
                     orders.add(order);
@@ -482,7 +495,7 @@ public class JDBCOrderDao implements OrderDao {
         int start = currentPage * pageSize - pageSize;
         long totalRows = 0;
         String queryBuilder = String.format(
-                "SELECT *, COUNT(id) OVER() AS total FROM orders " +
+                "SELECT *, COUNT(orders.id) OVER() AS total FROM orders " +
                         "WHERE status = ANY (?) AND user_id=? ORDER BY %s %s, %s %s LIMIT ? OFFSET ?",
                 sortField, sortDir, DEFAULT_SORT_FIELD, DEFAULT_SORT_DIR);
         try (PreparedStatement ps = connection.prepareStatement(queryBuilder)) {
@@ -498,6 +511,7 @@ public class JDBCOrderDao implements OrderDao {
                 while (rs.next()) {
                     totalRows = rs.getLong("total");
                     Order order = orderDaoMapper.extractFromResultSet(rs);
+                    order.setUser(user);
                     List<OrderItem> orderItems = fetchOrderItems(order.getId());
                     order.setOrderItems(orderItems);
                     orders.add(order);

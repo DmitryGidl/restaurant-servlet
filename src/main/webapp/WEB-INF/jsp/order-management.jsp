@@ -174,6 +174,7 @@
                    class=" text-reset"><fmt:message key="order.total.price"/></a>
             </th>
             <th>Address</th>
+            <th>Client Name</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -196,7 +197,7 @@
                 </td>
                 <td>${order.totalPrice}</td>
                 <td>${order.address}</td>
-
+                <td>${order.clientName}</td>
                 <td>
 
                     <c:url value="/admin/orders" var="nextStageUrl">

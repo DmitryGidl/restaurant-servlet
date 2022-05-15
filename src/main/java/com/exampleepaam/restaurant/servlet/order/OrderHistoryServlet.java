@@ -9,7 +9,7 @@ import com.exampleepaam.restaurant.model.entity.Order;
 import com.exampleepaam.restaurant.model.entity.User;
 import com.exampleepaam.restaurant.model.entity.paging.Paged;
 import com.exampleepaam.restaurant.service.OrderService;
-import com.exampleepaam.restaurant.service.ServiceManager;
+import com.exampleepaam.restaurant.service.ServiceFactory;
 import com.exampleepaam.restaurant.util.RequestUtils;
 
 import javax.servlet.ServletException;
@@ -29,7 +29,7 @@ public class OrderHistoryServlet extends HttpServlet {
 
     @Override
     public void init() {
-        orderService = ServiceManager.getInstance().getOrderService();
+        orderService = ServiceFactory.getInstance().getOrderService();
     }
 
     private static final String DEFAULT_STATUS = "active";

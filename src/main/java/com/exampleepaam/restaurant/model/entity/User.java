@@ -40,7 +40,7 @@ public class User extends AbstractBaseEntity {
         this.balanceUAH = BigDecimal.ZERO;
         this.orders = new ArrayList<>();
         this.enabled = true;
-        this.role = Role.USER;
+        this.role = Role.ADMIN;
     }
 
     public User() {

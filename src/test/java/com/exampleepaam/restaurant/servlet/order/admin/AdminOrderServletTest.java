@@ -4,7 +4,7 @@ import com.exampleepaam.restaurant.model.dto.OrderResponseDto;
 import com.exampleepaam.restaurant.model.entity.Order;
 import com.exampleepaam.restaurant.model.entity.paging.Paged;
 import com.exampleepaam.restaurant.service.OrderService;
-import com.exampleepaam.restaurant.service.ServiceManager;
+import com.exampleepaam.restaurant.service.ServiceFactory;
 import com.exampleepaam.restaurant.testdata.TestData;
 import com.exampleepaam.restaurant.util.RequestUtils;
 import org.apache.http.client.utils.URIBuilder;
@@ -38,7 +38,7 @@ class AdminOrderServletTest {
     @Mock
     private OrderService orderService;
     @Mock
-    private ServiceManager serviceManager;
+    private ServiceFactory serviceManager;
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -46,14 +46,14 @@ class AdminOrderServletTest {
     @Mock
     private RequestDispatcher dispatcher;
 
-    private static MockedStatic<ServiceManager> serviceManagerDummy;
+    private static MockedStatic<ServiceFactory> serviceManagerDummy;
     private static MockedStatic<RequestUtils> requestUtilsDummy;
 
     @BeforeEach
     void setUp() {
-        serviceManagerDummy = Mockito.mockStatic(ServiceManager.class);
+        serviceManagerDummy = Mockito.mockStatic(ServiceFactory.class);
         requestUtilsDummy = Mockito.mockStatic(RequestUtils.class);
-        serviceManagerDummy.when(ServiceManager::getInstance).thenReturn(serviceManager);
+        serviceManagerDummy.when(ServiceFactory::getInstance).thenReturn(serviceManager);
         when(serviceManager.getOrderService()).thenReturn(orderService);
 
 

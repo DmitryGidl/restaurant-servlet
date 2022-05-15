@@ -15,11 +15,11 @@ public class DishValidator {
     private DishValidator() {
     }
 
-    private static final int MAX_NAME_LENGTH = 30;
-    private static final int MIN_NAME_LENGTH = 4;
+    public static final int MAX_NAME_LENGTH = 30;
+    public static final int MIN_NAME_LENGTH = 4;
 
-    private static final int MAX_DESCRIPTION_LENGTH = 40;
-    private static final int MIN_DESCRIPTION_LENGTH = 4;
+    public static final int MAX_DESCRIPTION_LENGTH = 40;
+    public static final int MIN_DESCRIPTION_LENGTH = 4;
 
     /**
      * Validates a dish

@@ -16,7 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import com.exampleepaam.restaurant.service.OrderService;
-import com.exampleepaam.restaurant.service.ServiceManager;
+import com.exampleepaam.restaurant.service.ServiceFactory;
 import com.exampleepaam.restaurant.testdata.TestData;
 import com.exampleepaam.restaurant.util.RequestUtils;
 
@@ -37,7 +37,7 @@ class OrderHistoryServletTest {
     @Spy
     private OrderHistoryServlet orderHistoryServlet;
     @Mock
-    private ServiceManager serviceManager;
+    private ServiceFactory serviceManager;
     @Mock
     private OrderService orderService;
     @Mock
@@ -47,13 +47,13 @@ class OrderHistoryServletTest {
     @Mock
     private RequestDispatcher dispatcher;
 
-    private static MockedStatic<ServiceManager> serviceManagerDummy;
+    private static MockedStatic<ServiceFactory> serviceManagerDummy;
     private static MockedStatic<RequestUtils> requestUtilsDummy;
     private static MockedStatic<OrderMapper> orderMapperDummy;
 
     @BeforeEach
     void setUp() {
-        serviceManagerDummy = Mockito.mockStatic(ServiceManager.class);
+        serviceManagerDummy = Mockito.mockStatic(ServiceFactory.class);
         requestUtilsDummy = Mockito.mockStatic(RequestUtils.class);
         orderMapperDummy = Mockito.mockStatic(OrderMapper.class);
     }
@@ -69,14 +69,14 @@ class OrderHistoryServletTest {
     @Test
     void whenGetReturnOrderHistory() throws ServletException, IOException {
 
-        serviceManagerDummy.when(ServiceManager::getInstance).thenReturn(serviceManager);
+        serviceManagerDummy.when(ServiceFactory::getInstance).thenReturn(serviceManager);
         when(serviceManager.getOrderService()).thenReturn(orderService);
         List<Order> orderList = TestData.getOrderList();
 
         List<OrderResponseDto> orderResponseDtos = orderList.stream().map(order ->
                 new OrderResponseDto(order.getId(), OrderResponseDto.StatusDto.valueOf(order.getStatus().toString()),
                         order.getAddress(), order.getCreationDateTime(), order.getUpdateDateTime(), order.getTotalPrice(),
-                        order.getOrderItems().stream()
+                        order.getUser().getName(), order.getOrderItems().stream()
                                 .map(orderItem -> new OrderedItemResponseDto(orderItem.getDishName(),
                                 orderItem.getQuantity())).collect(Collectors.toList()))).collect(Collectors.toList());
 

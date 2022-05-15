@@ -8,7 +8,7 @@ import com.exampleepaam.restaurant.model.entity.Order;
 import com.exampleepaam.restaurant.model.entity.User;
 import com.exampleepaam.restaurant.service.DishService;
 import com.exampleepaam.restaurant.service.OrderService;
-import com.exampleepaam.restaurant.service.ServiceManager;
+import com.exampleepaam.restaurant.service.ServiceFactory;
 import com.exampleepaam.restaurant.service.UserService;
 import com.exampleepaam.restaurant.testdata.TestData;
 import com.exampleepaam.restaurant.util.ControllerUtil;
@@ -42,7 +42,7 @@ class OrderServletTest {
     @Mock
     DishService dishService;
     @Mock
-    ServiceManager serviceManager;
+    ServiceFactory serviceManager;
     @Mock
     OrderService orderService;
     @Mock
@@ -50,7 +50,7 @@ class OrderServletTest {
     @Mock
     HttpServletResponse response;
 
-    private static MockedStatic<ServiceManager> serviceManagerDummy;
+    private static MockedStatic<ServiceFactory> serviceManagerDummy;
     private static MockedStatic<ControllerUtil> controllerUtilDummy;
     private static MockedStatic<RequestUtils> requestUtilsDummy;
     private static MockedStatic<OrderValidator> orderValidatorDummy;
@@ -58,13 +58,13 @@ class OrderServletTest {
 
     @BeforeEach
     void setUp() {
-        serviceManagerDummy = Mockito.mockStatic(ServiceManager.class);
+        serviceManagerDummy = Mockito.mockStatic(ServiceFactory.class);
         requestUtilsDummy = Mockito.mockStatic(RequestUtils.class);
         controllerUtilDummy = Mockito.mockStatic(ControllerUtil.class);
         orderValidatorDummy = Mockito.mockStatic(OrderValidator.class);
         orderMapperDummy = Mockito.mockStatic(OrderMapper.class);
 
-        serviceManagerDummy.when(ServiceManager::getInstance).thenReturn(serviceManager);
+        serviceManagerDummy.when(ServiceFactory::getInstance).thenReturn(serviceManager);
         when(serviceManager.getUserService()).thenReturn(userService);
         when(serviceManager.getOrderService()).thenReturn(orderService);
         when(serviceManager.getDishService()).thenReturn(dishService);

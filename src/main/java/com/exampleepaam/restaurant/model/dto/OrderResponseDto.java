@@ -15,20 +15,22 @@ public class OrderResponseDto {
     private LocalDateTime creationDateTime;
     private LocalDateTime updateDateTime;
     private BigDecimal totalPrice;
+    private String clientName;
     private List<OrderedItemResponseDto> orderItems;
 
     public OrderResponseDto() {
     }
 
-    public OrderResponseDto(long id, StatusDto status, String address,
-                            LocalDateTime creationDateTime, LocalDateTime updateDateTime,
-                            BigDecimal totalPrice, List<OrderedItemResponseDto> orderItems) {
+    public OrderResponseDto(long id, StatusDto status, String address, LocalDateTime creationDateTime,
+                            LocalDateTime updateDateTime, BigDecimal totalPrice,
+                            String clientName, List<OrderedItemResponseDto> orderItems) {
         this.id = id;
         this.status = status;
         this.address = address;
         this.creationDateTime = creationDateTime;
         this.updateDateTime = updateDateTime;
         this.totalPrice = totalPrice;
+        this.clientName = clientName;
         this.orderItems = orderItems;
     }
 
@@ -40,6 +42,14 @@ public class OrderResponseDto {
         DECLINED
     }
 
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
 
     public long getId() {
         return id;

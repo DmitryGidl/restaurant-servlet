@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import com.exampleepaam.restaurant.service.DishService;
-import com.exampleepaam.restaurant.service.ServiceManager;
+import com.exampleepaam.restaurant.service.ServiceFactory;
 import com.exampleepaam.restaurant.testdata.TestData;
 
 import javax.servlet.RequestDispatcher;
@@ -31,7 +31,7 @@ public class MenuServletTest {
     @Spy
     private MenuServlet menuServlet;
     @Mock
-    private ServiceManager serviceManager;
+    private ServiceFactory serviceManager;
     @Mock
     private DishService dishService;
     @Mock
@@ -44,14 +44,14 @@ public class MenuServletTest {
     private ArgumentCaptor<Dish> dishCaptor;
 
     private static MockedStatic<DishMapper> dishMapperDummy;
-    private static MockedStatic<ServiceManager> serviceManagerDummy;
+    private static MockedStatic<ServiceFactory> serviceManagerDummy;
 
 
     @BeforeEach
     void setUp() {
-        serviceManagerDummy = Mockito.mockStatic(ServiceManager.class);
+        serviceManagerDummy = Mockito.mockStatic(ServiceFactory.class);
         dishMapperDummy = Mockito.mockStatic(DishMapper.class);
-        serviceManagerDummy.when(ServiceManager::getInstance).thenReturn(serviceManager);
+        serviceManagerDummy.when(ServiceFactory::getInstance).thenReturn(serviceManager);
 
 
     }

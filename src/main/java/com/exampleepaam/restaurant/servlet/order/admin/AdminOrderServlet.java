@@ -2,7 +2,7 @@ package com.exampleepaam.restaurant.servlet.order.admin;
 
 import com.exampleepaam.restaurant.constant.PathConstants;
 import com.exampleepaam.restaurant.model.entity.paging.Paged;
-import com.exampleepaam.restaurant.service.ServiceManager;
+import com.exampleepaam.restaurant.service.ServiceFactory;
 import com.exampleepaam.restaurant.mapper.OrderMapper;
 import com.exampleepaam.restaurant.model.dto.OrderResponseDto;
 import com.exampleepaam.restaurant.model.entity.Order;
@@ -35,7 +35,7 @@ public class AdminOrderServlet extends HttpServlet {
 
     @Override
     public void init() {
-        orderService = ServiceManager.getInstance().getOrderService();
+        orderService = ServiceFactory.getInstance().getOrderService();
     }
 
 

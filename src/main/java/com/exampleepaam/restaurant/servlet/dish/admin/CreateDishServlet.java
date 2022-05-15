@@ -6,7 +6,7 @@ import com.exampleepaam.restaurant.model.dto.CategoryDto;
 import com.exampleepaam.restaurant.model.dto.DishCreationDto;
 import com.exampleepaam.restaurant.model.entity.Dish;
 import com.exampleepaam.restaurant.service.DishService;
-import com.exampleepaam.restaurant.service.ServiceManager;
+import com.exampleepaam.restaurant.service.ServiceFactory;
 import com.exampleepaam.restaurant.validator.DishValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,7 @@ public class CreateDishServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        dishService = ServiceManager.getInstance().getDishService();
+        dishService = ServiceFactory.getInstance().getDishService();
         ServletContext sc = getServletContext();
         uploadDir = (String) sc.getAttribute(UPLOAD_DIR_ATTRIBUTE);
     }

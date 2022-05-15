@@ -2,7 +2,7 @@ package com.exampleepaam.restaurant.servlet.balance;
 
 import com.exampleepaam.restaurant.constant.PathConstants;
 import com.exampleepaam.restaurant.model.entity.User;
-import com.exampleepaam.restaurant.service.ServiceManager;
+import com.exampleepaam.restaurant.service.ServiceFactory;
 import com.exampleepaam.restaurant.service.UserService;
 import com.exampleepaam.restaurant.util.RequestUtils;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class TopUpBalanceServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        userService = ServiceManager.getInstance().getUserService();
+        userService = ServiceFactory.getInstance().getUserService();
     }
 
     @Override

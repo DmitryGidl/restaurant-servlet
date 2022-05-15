@@ -6,7 +6,7 @@ import com.exampleepaam.restaurant.exception.UserAlreadyExistsException;
 import com.exampleepaam.restaurant.mapper.UserMapper;
 import com.exampleepaam.restaurant.model.dto.UserCreationDto;
 import com.exampleepaam.restaurant.model.entity.User;
-import com.exampleepaam.restaurant.service.ServiceManager;
+import com.exampleepaam.restaurant.service.ServiceFactory;
 import com.exampleepaam.restaurant.service.UserService;
 import com.exampleepaam.restaurant.util.ControllerUtil;
 import com.exampleepaam.restaurant.util.RequestUtils;
@@ -39,7 +39,7 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        userService = ServiceManager.getInstance().getUserService();
+        userService = ServiceFactory.getInstance().getUserService();
     }
 
 

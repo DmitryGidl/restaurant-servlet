@@ -73,7 +73,7 @@ public class OrderMapper {
                 .collect(Collectors.toList());
         return new OrderResponseDto(order.getId(), OrderResponseDto.StatusDto.valueOf(order.getStatus().name()), order.getAddress(),
                 order.getCreationDateTime(), order.getUpdateDateTime(),
-                order.getTotalPrice(), orderedItemResponseDtos);
+                order.getTotalPrice(), order.getUser().getName(), orderedItemResponseDtos);
     }
 
     /**

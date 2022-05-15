@@ -3,7 +3,7 @@ package com.exampleepaam.restaurant.servlet.auth;
 import com.exampleepaam.restaurant.constant.ErrorAttributeConstants;
 import com.exampleepaam.restaurant.constant.PathConstants;
 import com.exampleepaam.restaurant.model.entity.User;
-import com.exampleepaam.restaurant.service.ServiceManager;
+import com.exampleepaam.restaurant.service.ServiceFactory;
 import com.exampleepaam.restaurant.service.UserService;
 import com.exampleepaam.restaurant.util.ControllerUtil;
 import com.exampleepaam.restaurant.util.RequestUtils;
@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     public void init() {
-        userService = ServiceManager.getInstance().getUserService();
+        userService = ServiceFactory.getInstance().getUserService();
     }
 
     @Override

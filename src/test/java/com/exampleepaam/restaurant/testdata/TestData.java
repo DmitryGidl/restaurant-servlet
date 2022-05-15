@@ -84,7 +84,8 @@ public class TestData {
 
         return new OrderResponseDto(1, OrderResponseDto.StatusDto.COOKING,
                 "testAddress", LocalDateTime.of(2022, Month.FEBRUARY, 20, 6, 30),
-                LocalDateTime.of(2022, Month.FEBRUARY, 20, 6, 30), BigDecimal.valueOf(231), Arrays.asList(
+                LocalDateTime.of(2022, Month.FEBRUARY, 20, 6, 30),
+                BigDecimal.valueOf(231), "testClient", Arrays.asList(
                 orderedItemResponseDto1, orderedItemResponseDto2));
     }
 
@@ -96,8 +97,9 @@ public class TestData {
 
         return new OrderResponseDto(2, OrderResponseDto.StatusDto.DELIVERING,
                 "testAddress", LocalDateTime.of(2022, Month.FEBRUARY, 20, 6, 30),
-                LocalDateTime.of(2022, Month.FEBRUARY, 20, 6, 30), BigDecimal.valueOf(50), Arrays.asList(
-                orderedItemResponseDto1, orderedItemResponseDto2));
+                LocalDateTime.of(2022, Month.FEBRUARY, 20, 6, 30),
+                BigDecimal.valueOf(50), "testClient",
+                Arrays.asList(orderedItemResponseDto1,orderedItemResponseDto2));
     }
 
     public static Paged<OrderResponseDto> getOrderResponsePaged() {
