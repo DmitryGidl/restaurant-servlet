@@ -1,7 +1,7 @@
 package com.exampleepaam.restaurant.service;
 
 /**
- * Service Factory
+ * Shared service instances
  */
 public class SharedServices {
     private static SharedServices instance;
