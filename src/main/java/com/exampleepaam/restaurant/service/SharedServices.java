@@ -3,17 +3,17 @@ package com.exampleepaam.restaurant.service;
 /**
  * Service Factory
  */
-public class ServiceFactory {
-    private static ServiceFactory instance;
+public class SharedServices {
+    private static SharedServices instance;
     private final DishService dishService = new DishService();
     private final OrderService orderService = new OrderService();
     private  final UserService userService = new UserService();
 
-    private ServiceFactory() {
+    private SharedServices() {
     }
 
-    public static synchronized ServiceFactory getInstance() {
-        if (instance == null) instance = new ServiceFactory();
+    public static synchronized SharedServices getInstance() {
+        if (instance == null) instance = new SharedServices();
         return instance;
     }
 

@@ -5,7 +5,7 @@ import com.exampleepaam.restaurant.model.dto.DishCreationDto;
 import com.exampleepaam.restaurant.model.entity.Category;
 import com.exampleepaam.restaurant.model.entity.Dish;
 import com.exampleepaam.restaurant.service.DishService;
-import com.exampleepaam.restaurant.service.ServiceFactory;
+import com.exampleepaam.restaurant.service.SharedServices;
 import com.exampleepaam.restaurant.validator.DishValidator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,7 +41,7 @@ class CreateDishServletTest {
     @Mock
     ServletContext servletContext;
     @Mock
-    ServiceFactory serviceManager;
+    SharedServices serviceManager;
     @Mock
     DishService dishService;
     @Mock
@@ -55,14 +55,14 @@ class CreateDishServletTest {
     @Mock
     Part imagePart;
 
-    private static MockedStatic<ServiceFactory> serviceManagerDummy;
+    private static MockedStatic<SharedServices> serviceManagerDummy;
     private static MockedStatic<DishValidator> dishValidatorDummy;
 
     @BeforeEach
     void setUp() {
-        serviceManagerDummy = Mockito.mockStatic(ServiceFactory.class);
+        serviceManagerDummy = Mockito.mockStatic(SharedServices.class);
         dishValidatorDummy = Mockito.mockStatic(DishValidator.class);
-        serviceManagerDummy.when(ServiceFactory::getInstance).thenReturn(serviceManager);
+        serviceManagerDummy.when(SharedServices::getInstance).thenReturn(serviceManager);
         when(servletConfig.getServletContext()).thenReturn(servletContext);
         when(servletContext.getAttribute(UPLOAD_DIR_ATTRIBUTE)).thenReturn(UPLOAD_DIR);
 

@@ -16,7 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import com.exampleepaam.restaurant.service.OrderService;
-import com.exampleepaam.restaurant.service.ServiceFactory;
+import com.exampleepaam.restaurant.service.SharedServices;
 import com.exampleepaam.restaurant.testdata.TestData;
 import com.exampleepaam.restaurant.util.RequestUtils;
 
@@ -37,7 +37,7 @@ class OrderHistoryServletTest {
     @Spy
     private OrderHistoryServlet orderHistoryServlet;
     @Mock
-    private ServiceFactory serviceManager;
+    private SharedServices serviceManager;
     @Mock
     private OrderService orderService;
     @Mock
@@ -47,13 +47,13 @@ class OrderHistoryServletTest {
     @Mock
     private RequestDispatcher dispatcher;
 
-    private static MockedStatic<ServiceFactory> serviceManagerDummy;
+    private static MockedStatic<SharedServices> serviceManagerDummy;
     private static MockedStatic<RequestUtils> requestUtilsDummy;
     private static MockedStatic<OrderMapper> orderMapperDummy;
 
     @BeforeEach
     void setUp() {
-        serviceManagerDummy = Mockito.mockStatic(ServiceFactory.class);
+        serviceManagerDummy = Mockito.mockStatic(SharedServices.class);
         requestUtilsDummy = Mockito.mockStatic(RequestUtils.class);
         orderMapperDummy = Mockito.mockStatic(OrderMapper.class);
     }
@@ -69,7 +69,7 @@ class OrderHistoryServletTest {
     @Test
     void whenGetReturnOrderHistory() throws ServletException, IOException {
 
-        serviceManagerDummy.when(ServiceFactory::getInstance).thenReturn(serviceManager);
+        serviceManagerDummy.when(SharedServices::getInstance).thenReturn(serviceManager);
         when(serviceManager.getOrderService()).thenReturn(orderService);
         List<Order> orderList = TestData.getOrderList();
 

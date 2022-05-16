@@ -1,7 +1,7 @@
 package com.exampleepaam.restaurant.web.filter;
 
 import com.exampleepaam.restaurant.model.entity.User;
-import com.exampleepaam.restaurant.service.ServiceFactory;
+import com.exampleepaam.restaurant.service.SharedServices;
 import com.exampleepaam.restaurant.service.UserService;
 import com.exampleepaam.restaurant.util.RequestUtils;
 
@@ -26,7 +26,7 @@ public class UserBalanceFilter extends HttpFilter {
 
     @Override
     public void init() throws ServletException {
-        userService = ServiceFactory.getInstance().getUserService();
+        userService = SharedServices.getInstance().getUserService();
     }
 
     @Override

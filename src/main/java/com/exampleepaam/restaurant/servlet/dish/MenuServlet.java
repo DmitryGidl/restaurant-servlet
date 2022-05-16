@@ -4,7 +4,7 @@ package com.exampleepaam.restaurant.servlet.dish;
 import com.exampleepaam.restaurant.constant.PathConstants;
 import com.exampleepaam.restaurant.model.entity.Dish;
 import com.exampleepaam.restaurant.service.DishService;
-import com.exampleepaam.restaurant.service.ServiceFactory;
+import com.exampleepaam.restaurant.service.SharedServices;
 import com.exampleepaam.restaurant.model.dto.DishResponseDto;
 
 import javax.servlet.ServletException;
@@ -35,7 +35,7 @@ public class MenuServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        dishService = ServiceFactory.getInstance().getDishService();
+        dishService = SharedServices.getInstance().getDishService();
     }
 
     @Override

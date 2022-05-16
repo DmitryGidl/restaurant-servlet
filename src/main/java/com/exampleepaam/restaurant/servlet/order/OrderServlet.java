@@ -4,7 +4,7 @@ import com.exampleepaam.restaurant.constant.PathConstants;
 import com.exampleepaam.restaurant.model.dto.OrderCreationDto;
 import com.exampleepaam.restaurant.model.entity.Dish;
 import com.exampleepaam.restaurant.service.DishService;
-import com.exampleepaam.restaurant.service.ServiceFactory;
+import com.exampleepaam.restaurant.service.SharedServices;
 import com.exampleepaam.restaurant.util.RequestUtils;
 import com.exampleepaam.restaurant.mapper.OrderMapper;
 import com.exampleepaam.restaurant.model.entity.Order;
@@ -47,9 +47,9 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     public void init() {
-        userService = ServiceFactory.getInstance().getUserService();
-        orderService = ServiceFactory.getInstance().getOrderService();
-        dishService = ServiceFactory.getInstance().getDishService();
+        userService = SharedServices.getInstance().getUserService();
+        orderService = SharedServices.getInstance().getOrderService();
+        dishService = SharedServices.getInstance().getDishService();
     }
 
     @Override

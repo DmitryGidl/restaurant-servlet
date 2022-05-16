@@ -2,7 +2,7 @@ package com.exampleepaam.restaurant.servlet.auth;
 
 import com.exampleepaam.restaurant.model.dto.UserCreationDto;
 import com.exampleepaam.restaurant.model.entity.User;
-import com.exampleepaam.restaurant.service.ServiceFactory;
+import com.exampleepaam.restaurant.service.SharedServices;
 import com.exampleepaam.restaurant.service.UserService;
 import com.exampleepaam.restaurant.testdata.TestData;
 import com.exampleepaam.restaurant.util.RequestUtils;
@@ -39,7 +39,7 @@ class LoginServletTest {
     private UserService userService;
 
     @Mock
-    private ServiceFactory serviceManager;
+    private SharedServices serviceManager;
     @Mock
     private HttpServletRequest request;
 
@@ -55,13 +55,13 @@ class LoginServletTest {
     public static final String PASSWORD_PARAMETER = "password";
     public static final String EMAIL_PARAMETER = "email";
 
-    private static MockedStatic<ServiceFactory> serviceManagerDummy;
+    private static MockedStatic<SharedServices> serviceManagerDummy;
     private static MockedStatic<UserValidator> userValidatorDummy;
     private static MockedStatic<RequestUtils> requestUtilsDummy;
 
     @BeforeEach
     void setUp() {
-        serviceManagerDummy = Mockito.mockStatic(ServiceFactory.class);
+        serviceManagerDummy = Mockito.mockStatic(SharedServices.class);
         userValidatorDummy = Mockito.mockStatic(UserValidator.class);
         requestUtilsDummy = Mockito.mockStatic(RequestUtils.class);
     }
@@ -89,7 +89,7 @@ class LoginServletTest {
         UserCreationDto userCreation = TestData.getUserCreation1();
         User user = TestData.getUser1();
 
-        serviceManagerDummy.when(ServiceFactory::getInstance).thenReturn(serviceManager);
+        serviceManagerDummy.when(SharedServices::getInstance).thenReturn(serviceManager);
         when(serviceManager.getUserService()).thenReturn(userService);
         when(request.getParameter(EMAIL_PARAMETER)).thenReturn(userCreation.getEmail());
         when(request.getParameter(PASSWORD_PARAMETER)).thenReturn(userCreation.getPassword());

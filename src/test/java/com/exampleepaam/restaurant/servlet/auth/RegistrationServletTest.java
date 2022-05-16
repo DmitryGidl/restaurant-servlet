@@ -12,7 +12,7 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import com.exampleepaam.restaurant.service.ServiceFactory;
+import com.exampleepaam.restaurant.service.SharedServices;
 import com.exampleepaam.restaurant.service.UserService;
 import com.exampleepaam.restaurant.testdata.TestData;
 import com.exampleepaam.restaurant.util.RequestUtils;
@@ -49,10 +49,10 @@ class RegistrationServletTest {
     @Mock
     private HttpSession session;
     @Mock
-    private ServiceFactory serviceManager;
+    private SharedServices serviceManager;
 
     private static MockedStatic<RequestUtils> requestUtilsDummy;
-    private static MockedStatic<ServiceFactory> serviceManagerDummy;
+    private static MockedStatic<SharedServices> serviceManagerDummy;
     private static MockedStatic<UserValidator> userValidatorDummy;
     private static MockedStatic<UserMapper> userMapperDummy;
 
@@ -60,7 +60,7 @@ class RegistrationServletTest {
     @BeforeEach
     void setUp() {
         requestUtilsDummy = Mockito.mockStatic(RequestUtils.class);
-        serviceManagerDummy = Mockito.mockStatic(ServiceFactory.class);
+        serviceManagerDummy = Mockito.mockStatic(SharedServices.class);
         userValidatorDummy = Mockito.mockStatic(UserValidator.class);
         userMapperDummy = Mockito.mockStatic(UserMapper.class);
 
@@ -89,7 +89,7 @@ class RegistrationServletTest {
 
     @Test
     void whenPostThenSaveUser() throws IOException, ServletException {
-        serviceManagerDummy.when(ServiceFactory::getInstance).thenReturn(serviceManager);
+        serviceManagerDummy.when(SharedServices::getInstance).thenReturn(serviceManager);
         when(serviceManager.getUserService()).thenReturn(userService);
 
         UserCreationDto userCreationDto = TestData.getUserCreation1();

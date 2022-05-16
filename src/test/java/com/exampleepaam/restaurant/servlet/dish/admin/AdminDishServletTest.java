@@ -4,7 +4,7 @@ import com.exampleepaam.restaurant.model.dto.DishResponseDto;
 import com.exampleepaam.restaurant.model.entity.Dish;
 import com.exampleepaam.restaurant.model.entity.paging.Paged;
 import com.exampleepaam.restaurant.service.DishService;
-import com.exampleepaam.restaurant.service.ServiceFactory;
+import com.exampleepaam.restaurant.service.SharedServices;
 import com.exampleepaam.restaurant.testdata.TestData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +29,7 @@ public class AdminDishServletTest {
     @Spy
     private AdminDishServlet adminDishServlet;
     @Mock
-    private ServiceFactory serviceManager;
+    private SharedServices serviceManager;
     @Mock
     private DishService dishService;
     @Mock
@@ -41,12 +41,12 @@ public class AdminDishServletTest {
     @Captor
     private ArgumentCaptor<Paged<DishResponseDto>> dishResponseCaptor;
 
-    private static MockedStatic<ServiceFactory> serviceManagerDummy;
+    private static MockedStatic<SharedServices> serviceManagerDummy;
 
     @BeforeEach
     void setUp() {
-        serviceManagerDummy = Mockito.mockStatic(ServiceFactory.class);
-        serviceManagerDummy.when(ServiceFactory::getInstance).thenReturn(serviceManager);
+        serviceManagerDummy = Mockito.mockStatic(SharedServices.class);
+        serviceManagerDummy.when(SharedServices::getInstance).thenReturn(serviceManager);
         when(serviceManager.getDishService()).thenReturn(dishService);
     }
 

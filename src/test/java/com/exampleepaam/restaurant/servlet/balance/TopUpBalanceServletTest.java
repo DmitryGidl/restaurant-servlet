@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import com.exampleepaam.restaurant.service.ServiceFactory;
+import com.exampleepaam.restaurant.service.SharedServices;
 import com.exampleepaam.restaurant.service.UserService;
 import com.exampleepaam.restaurant.testdata.TestData;
 import com.exampleepaam.restaurant.util.RequestUtils;
@@ -38,20 +38,20 @@ public class TopUpBalanceServletTest {
     @Mock
     private UserService userService;
     @Mock
-    private ServiceFactory serviceManager;
+    private SharedServices serviceManager;
 
     @Captor
     private ArgumentCaptor<User> userCaptor;
 
-    private static MockedStatic<ServiceFactory> serviceManagerDummy;
+    private static MockedStatic<SharedServices> serviceManagerDummy;
     private static MockedStatic<RequestUtils> requestUtilsDummy;
 
 
     @BeforeEach
     void setUp() {
-        serviceManagerDummy = Mockito.mockStatic(ServiceFactory.class);
+        serviceManagerDummy = Mockito.mockStatic(SharedServices.class);
         requestUtilsDummy = Mockito.mockStatic(RequestUtils.class);
-        serviceManagerDummy.when(ServiceFactory::getInstance).thenReturn(serviceManager);
+        serviceManagerDummy.when(SharedServices::getInstance).thenReturn(serviceManager);
 
 
     }

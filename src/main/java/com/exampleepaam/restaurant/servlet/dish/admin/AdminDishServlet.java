@@ -5,7 +5,7 @@ import com.exampleepaam.restaurant.model.dto.DishResponseDto;
 import com.exampleepaam.restaurant.model.entity.Dish;
 import com.exampleepaam.restaurant.model.entity.paging.Paged;
 import com.exampleepaam.restaurant.service.DishService;
-import com.exampleepaam.restaurant.service.ServiceFactory;
+import com.exampleepaam.restaurant.service.SharedServices;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +35,7 @@ public class AdminDishServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        dishService = ServiceFactory.getInstance().getDishService();
+        dishService = SharedServices.getInstance().getDishService();
     }
 
     @Override

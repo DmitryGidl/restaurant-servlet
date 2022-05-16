@@ -1,7 +1,7 @@
 package com.exampleepaam.restaurant.servlet.dish.admin;
 
 import com.exampleepaam.restaurant.service.DishService;
-import com.exampleepaam.restaurant.service.ServiceFactory;
+import com.exampleepaam.restaurant.service.SharedServices;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ class DeleteDishServletTest {
     @Mock
     private ServletContext servletContext;
     @Mock
-    private ServiceFactory serviceManager;
+    private SharedServices serviceManager;
     @Mock
     private DishService dishService;
     @Mock
@@ -42,12 +42,12 @@ class DeleteDishServletTest {
     @Spy
     private ServletConfig servletConfig;
 
-    private static MockedStatic<ServiceFactory> serviceManagerDummy;
+    private static MockedStatic<SharedServices> serviceManagerDummy;
 
     @BeforeEach
     void setUp() {
-        serviceManagerDummy = Mockito.mockStatic(ServiceFactory.class);
-        serviceManagerDummy.when(ServiceFactory::getInstance).thenReturn(serviceManager);
+        serviceManagerDummy = Mockito.mockStatic(SharedServices.class);
+        serviceManagerDummy.when(SharedServices::getInstance).thenReturn(serviceManager);
         when(serviceManager.getDishService()).thenReturn(dishService);
         when(servletConfig.getServletContext()).thenReturn(servletContext);
     }
